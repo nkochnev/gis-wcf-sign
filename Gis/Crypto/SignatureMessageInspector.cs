@@ -13,6 +13,17 @@ namespace Gis.Crypto
 	{
 		public object BeforeSendRequest(ref Message request, IClientChannel channel)
 		{
+			//remove extra tags VsDebuggerCausalityData
+			int limit = request.Headers.Count;
+			for (int i = 0; i < limit; ++i)
+			{
+				if (request.Headers[i].Name.Equals("VsDebuggerCausalityData"))
+				{
+					request.Headers.RemoveAt(i);
+					break;
+				}
+			}
+
 			string st = GetSignElement(MessageString(ref request));
 
 			//place for log request

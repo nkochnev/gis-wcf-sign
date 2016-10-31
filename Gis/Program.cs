@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using Gis.Crypto;
 using Gis.Infrastructure.NsiCommonService;
 
@@ -8,6 +9,10 @@ namespace Gis
 	{
 		static void Main(string[] args)
 		{
+			//https://msdn.microsoft.com/en-us/library/system.net.servicepointmanager.servercertificatevalidationcallback.aspx
+			//необходимо, что бы подавить эксэпшн из-за кривого сертификата на сервере
+			ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
 			var service = new NsiPortsTypeClient();
 			service.ClientCredentials.UserName.UserName = "lanit";
 			service.ClientCredentials.UserName.Password = "tv,n8!Ya";
